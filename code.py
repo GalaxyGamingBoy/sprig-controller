@@ -9,6 +9,7 @@ import usb_hid
 from adafruit_hid.keyboard import Keyboard
 from adafruit_st7735r import ST7735R
 from input_mapper import input_map
+from settings import open_settings, close_settings, setting_loop
 
 LOOP_SLEEP = .005 # In seconds
 in_settings = False
@@ -31,6 +32,7 @@ def init():
     
     # Init Done
     printStatus("Init Finished!")
+    print("Press [AWIL] to go to set-tings")
     sprig_keys['status']['r'].value = False
     sprig_keys['status']['l'].value = True
 
@@ -38,18 +40,21 @@ def loop():
     global in_settings
     if not sprig_keys['buttons']['a'].value and not sprig_keys['buttons']['w'].value and not sprig_keys['buttons']['i'].value and not sprig_keys['buttons']['l'].value and not in_settings:
             in_settings = True
-            printStatus("Settings Opened")
+            kbd.release_all()
+            open_settings()
     elif not sprig_keys['buttons']['s'].value and not sprig_keys['buttons']['d'].value and not sprig_keys['buttons']['j'].value and not sprig_keys['buttons']['k'].value and in_settings:
             in_settings = False
-            printStatus("Settings Closed")
+            kbd.release_all()
+            close_settings()
     elif not in_settings:
           for button in sprig_keys['buttons']:
                 if not sprig_keys['buttons'][button].value:
-                    #   registerInput(button)
                     kbd.press(input_map[button])
                 else:
-                    #   deregisterInput(button)
                     kbd.release(input_map[button])
+    
+    if in_settings:
+         setting_loop()
     time.sleep(LOOP_SLEEP)
 
 init()
