@@ -41,5 +41,6 @@ keys = {
     'UP': Keycode.UP_ARROW,
     'DOWN': Keycode.DOWN_ARROW,
     'LEFT': Keycode.LEFT_ARROW,
-    'RIGHT': Keycode.RIGHT_ARROW
+    'RIGHT': Keycode.RIGHT_ARROW,
+    'ENTER': Keycode.ENTER
 }
