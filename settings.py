@@ -69,8 +69,9 @@ def setting_loop():
 
     delay()
     global in_change_key, key
-    if not sprig_keys['buttons']['w'].value:
-        printStatus("[KEY] = WASDIJKL")
+    if not sprig_keys['buttons']['w'].value and not in_change_key and not settingsMapping:
+        printStatus("SELECT [KEY]")
+        printStatus("[KEY] ~= WASDIJKL")
         settingsMapping = True
         delay()
     
@@ -82,4 +83,5 @@ def setting_loop():
                 change_key()
     
     if in_change_key:
+        delay()
         change_key_loop()
