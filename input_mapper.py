@@ -42,5 +42,30 @@ keys = {
     'DOWN': Keycode.DOWN_ARROW,
     'LEFT': Keycode.LEFT_ARROW,
     'RIGHT': Keycode.RIGHT_ARROW,
-    'ENTER': Keycode.ENTER
+    'ENTER': Keycode.ENTER,
+    'ESC': Keycode.ESCAPE
+}
+
+# TEMPLATES!
+templates = {
+    'DEFAULT': {
+        'w': keys['w'],
+        'a': keys['a'],
+        's': keys['s'],
+        'd': keys['d'],
+        'i': keys['i'],
+        'j': keys['j'],
+        'k': keys['k'],
+        'l': keys['l']
+    },
+    'UNDERTALE': {
+        'w': keys['UP'],
+        'a': keys['LEFT'],
+        's': keys['DOWN'],
+        'd': keys['RIGHT'],
+        'i': keys['c'],
+        'j': keys['ESC'],
+        'k': keys['x'],
+        'l': keys['ENTER']
+    }
 }

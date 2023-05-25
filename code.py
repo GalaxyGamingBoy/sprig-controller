@@ -8,8 +8,11 @@ import time
 import usb_hid
 from adafruit_hid.keyboard import Keyboard
 from adafruit_st7735r import ST7735R
-from input_mapper import input_map
+from input_mapper import input_map, templates
 from settings import open_settings, close_settings, setting_loop
+
+# GLOBAL SETTINGS OVERRIDE
+template_in_use = None # Change this to a template in input_mapper.py
 
 LOOP_SLEEP = .005 # In seconds
 in_settings = False
@@ -18,6 +21,8 @@ prev_pressed_keys = []
 kbd = Keyboard(usb_hid.devices)
 
 def init():
+    global input_map
+
     # Start Init
     sprig_init()
     printStatus("Init Started!")
@@ -32,9 +37,22 @@ def init():
     
     # Init Done
     printStatus("Init Finished!")
-    print("Press [AWIL] to go to set-tings")
     sprig_keys['status']['r'].value = False
     sprig_keys['status']['l'].value = True
+
+    # Check For Template
+    printStatus("TEMPLATES CHECK")
+    if template_in_use:
+         printStatus(f"SEARCHING FOR:       [{template_in_use}]")
+         if template_in_use in templates:
+            input_map = templates[template_in_use]
+            printStatus(f"LOAD [{template_in_use}]")
+         else:
+            printError(f"[{template_in_use}] NOT FOUND")
+    else:
+         printError("SETTING NOT FOUND, IGNORING")
+    
+    print("Press [AWIL] to go to set-tings")
 
 def loop():
     global in_settings
